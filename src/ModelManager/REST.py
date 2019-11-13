@@ -1,7 +1,7 @@
 from utils import *
-from flask import Flask, jsonify, request, make_response
+from flask import Flask,jsonify,request,make_response
 
-app = Flask(__name__)
+app=Flask(__name__)
 
 #------------------------------------------------------------------------------------------------#
 #                                        Error Handling                                         #
@@ -9,24 +9,24 @@ app = Flask(__name__)
 
 @app.errorhandler(400)
 def bad_request(error):
-    return make_response(jsonify({"error": "Bad request"}), 400)
+    return make_response(jsonify({"error":"Bad request"}),400)
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return make_response(jsonify({"error":"Not found"}),404)
 
-@app.route("/", methods = ["GET"])
+@app.route("/",methods=["GET"])
 def test_app():
-    return jsonify({"success": "true"})
+    return jsonify({"success":"true"})
 
 #------------------------------------------------------------------------------------------------#
 #                                        Endpoint Testing                                        #
 #------------------------------------------------------------------------------------------------#
 
-@app.route("/clean_data", methods = ["POST"])
+@app.route("/clean_data",methods=["POST"])
 def clean_data():
-    text = request.json.get("text")
-    text = clean_text(text)
+    text=request.json.get("text")
+    text=clean_text(text)
     return jsonify({"cleaned_text":text})
 
 
@@ -34,56 +34,103 @@ def clean_data():
 #                                       Main Functionality                                       #
 #------------------------------------------------------------------------------------------------#
 
-@app.route("/train_FastText", methods = ["POST"])
-def train_gensim():
+@app.route("/train_FastText",methods=["POST"])
+def train_FastText():
+    
+    update=request.json.get("update")
+    params=request.json.get("params")
+    train_path=request.json.get("trainPath")
+    model_store_path=request.json.get("savePath")
+    
+    if not params["min_count"]:
+        params["min_count"]=5
+    
+    if not params["size"]:
+        params["size"]=100
+        
+    if not params["window"]:
+        kwargs["window"]=5
+    
+    if not params["workers"]:
+        params["workers"]=3
+    
+    if not params["alpha"]:
+        params["alpha"]=0.025
+    
+    if not params["min_alpha"]:
+        params["min_alpha"]=0.0001
+    
+    if not params["sg"]:
+        params["sg"]=0
+    
+    if not params["hs"]:
+        params["hs"]=0
+    
+    if not params["seed"]:
+        params["seed"]=1
+    
+    if not params["sample"]:
+        params["sample"]=0.001
+    
+    if not params["negative"]:
+        params["negative"]=5
+    
+    if not params["ns_exponent"]:
+        params["ns_exponent"]=0.75
+    
+    if not params["cbow_mean"]:
+        params["cbow_mean"]=1
+    
+    if not params["iter"]:
+        params["iter"]=5
 
-    path = request.json.get("path")
-
-    kwargs = {}
-    kwargs["min_count"] = request.json.get("min_count")
-    kwargs["size"] = request.json.get("size")
-    kwargs["window"] = request.json.get("window")
-    kwargs["workers"] = request.json.get("workers")
-    kwargs["alpha"] = request.json.get("alpha")
-    kwargs["min_alpha"] = request.json.get("min_alpha")
-    kwargs["sg"] = request.json.get("sg")
-    kwargs["hs"] = request.json.get("hs")
-    kwargs["seed"] = request.json.get("seed")
-    kwargs["max_vocab_size"] = request.json.get("max_vocab_size")
-    kwargs["sample"] = request.json.get("sample")
-    kwargs["lr"] = request.json.get("lr")
-    kwargs["negative"] = request.json.get("negative")
-    kwargs["ns_exponent"] = request.json.get("ns_exponent")
-    kwargs["cbow_mean"] = request.json.get("cbow_mean")
-    kwargs["iteration"] = request.json.get("iter")
-    kwargs["trim_rule"] = request.json.get("trim_rule")
-    kwargs["sorted_vocab"] = request.json.get("sorted_vocab" )
-    kwargs["batch_words"] = request.json.get("batch_words")
-    kwargs["min_n"] = request.json.get("min_n")
-    kwargs["max_n"] = request.json.get("max_n")
-    kwargs["word_ngrams"] = request.json.get("word_ngrams")
-    kwargs["bucket"] = request.json.get("bucket")
-
-    model_gensim = FT(**kwargs)
-    model_gensim.build_vocab(corpus_file=corpus_file)
-
+    if not params["sorted_vocab"]:
+        params["sorted_vocab"]=1
+    
+    if not params["batch_words"]:
+        params["batch_words"]=10000
+    
+    if not params["min_n"]:
+        params["min_n"]=3
+    
+    if not params["max_n"]:
+        params["max_n"]=6
+    
+    if not params["word_ngrams"]:
+        params["word_ngrams"]=1
+    
+    if not params["bucket"]:
+        params["bucket"]=2000000
+    
+    
+    model_gensim=FT(**params)
+    
+    if update:
+        model_gensim.build_vocab(corpus_file=corpus_file,update=True)
+    else:
+        model_gensim.build_vocab(corpus_file=corpus_file)
+        
     # train the model
     model_gensim.train(
-        corpus_file=corpus_file, 
+        corpus_file=corpus_file,
         epochs=model_gensim.epochs,
-        total_examples=model_gensim.corpus_count, 
+        total_examples=model_gensim.corpus_count,
         total_words=model_gensim.corpus_total_words
     )
+    
+    save_model(model_gensim,model_store_path)
+    
+    return jsonify({"FastText Training":"Success"})
 
-@app.route("/train_glove", methods = ["POST"])
+@app.route("/train_glove",methods=["POST"])
 def train_glove():
     pass
 
-@app.route("/train_doc2vec", methods = ["POST"])
+@app.route("/train_doc2vec",methods=["POST"])
 def train_doc2vec():
     pass
 
 #-------------------------------------------------------------------------------------------------#
 
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 5000, debug = True)
+    app.run(host="0.0.0.0",port=5000,debug=True)
