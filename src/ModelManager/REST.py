@@ -34,7 +34,7 @@ def clean_data():
 #                                       Main Functionality                                       #
 #------------------------------------------------------------------------------------------------#
 
-@app.route("/train_word2vec", methods = ["POST"])
+@app.route("/train_FastText", methods = ["POST"])
 def train_gensim():
 
     path = request.json.get("path")
@@ -64,7 +64,7 @@ def train_gensim():
     kwargs["word_ngrams"] = request.json.get("word_ngrams")
     kwargs["bucket"] = request.json.get("bucket")
 
-    model_gensim = FTG(**kwargs)
+    model_gensim = FT(**kwargs)
     model_gensim.build_vocab(corpus_file=corpus_file)
 
     # train the model
