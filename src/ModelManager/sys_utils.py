@@ -1,5 +1,5 @@
 from gensim.models.fasttext import FT
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
+from gensim.models.doc2vec import Doc2Vec as DV, TaggedDocument
 
 def save_model(model,path):
     model.save(path)
