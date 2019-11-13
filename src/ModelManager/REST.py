@@ -63,7 +63,9 @@ def train_doc2vec():
     if not params["trim_rule"]:
         params["trim_rule"]=  
 
-
+    if not params["callbacks"]:
+        params["callbacks"]=  
+        
     model_gensim=D2V(**params)
     
     if update:
