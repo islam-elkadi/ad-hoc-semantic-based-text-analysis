@@ -1,6 +1,6 @@
 from itertools import product
 
-from gensim.models.fasttext import FTG
+from gensim.models.fasttext import FT
 
 def save_model(model, path):
     model.save(path)
