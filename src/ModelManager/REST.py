@@ -34,7 +34,7 @@ def clean_data():
 #                                       Main Functionality                                       #
 #------------------------------------------------------------------------------------------------#
 
-@app.route("/train_gensim", methods = ["POST"])
+@app.route("/train_word2vec", methods = ["POST"])
 def train_gensim():
 
     path = request.json.get("path")
@@ -63,27 +63,17 @@ def train_gensim():
     kwargs["max_n"] = request.json.get("max_n")
     kwargs["word_ngrams"] = request.json.get("word_ngrams")
     kwargs["bucket"] = request.json.get("bucket")
-    kwargs = {k: v for k, v in kwargs.items() if v}
-    keys, values = zip(*dictionary.items())
-    
-    values = product(*values)
-    for combinations in values:
-        kwargs = dict(zip(keys, combinations))
-        model_gensim = FTG(**kwargs)
-        model_gensim.build_vocab(corpus_file=corpus_file)
 
-        # train the model
-        model_gensim.train(
-            corpus_file=corpus_file, 
-            epochs=model_gensim.epochs,
-            total_examples=model_gensim.corpus_count, 
-            total_words=model_gensim.corpus_total_words
-        )
+    model_gensim = FTG(**kwargs)
+    model_gensim.build_vocab(corpus_file=corpus_file)
 
-
-@app.route("/train_word2vec", methods = ["POST"])
-def train_word2vec():
-    pass
+    # train the model
+    model_gensim.train(
+        corpus_file=corpus_file, 
+        epochs=model_gensim.epochs,
+        total_examples=model_gensim.corpus_count, 
+        total_words=model_gensim.corpus_total_words
+    )
 
 @app.route("/train_glove", methods = ["POST"])
 def train_glove():
