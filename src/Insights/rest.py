@@ -61,8 +61,8 @@ def sentence_classify():
 
     categories = [x for x in categories if x in model.vocab]
     synonyms = get_syns(model, categories)
+    
     clean_data = clean_text(data)
-
     token_sents = split_sentences(clean_data)
     token_words = text_to_word_tokens(model, clean_data)
 
