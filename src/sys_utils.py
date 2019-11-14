@@ -17,6 +17,9 @@ from gensim.summarization import keywords
 from gensim.utils import simple_preprocess
 from gensim.summarization.summarizer import summarize
 from gensim.summarization.textcleaner import replace_abbreviations, split_sentences
+from gensim.models.fasttext import FT
+from gensim.models.doc2vec import Doc2Vec as D2V, TaggedDocument
+
 
 from textblob import TextBlob
 
@@ -177,3 +180,16 @@ def append_zero_to_decimal(text):
     for tmp in temp:
         text = re.sub(tmp, "0{}".format(tmp.strip()), text)
     return text
+
+
+#-----------------------------------------------
+#                   Gensim                   
+#-----------------------------------------------
+
+def save_model(model,path):
+    model.save(path)
+    return True
+
+def load_model(path):
+    model=model.load(path)
+    return model

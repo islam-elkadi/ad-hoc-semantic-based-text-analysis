@@ -105,6 +105,71 @@ def summarize_text():
     result = create_summary(text, ratio)
     return jsonify(result)
 
+@app.route("preprocess_data",methods=["POST"])
+def preprocess_data():
+    
+    target=request.json.get("target")
+    save_path=request.json.get("save_path")
+    train_path=request.json.get("train_path")
+    
+    df=pd.read_csv("path")
+    df[target]=df[target].apply(lambda x: clean_text(x))
+    df.dropna(subset=[target],inplace=True)
+    with open('{}.txt'.format(save_path), 'w') as fp:
+        fp.write('\n'.join(df[target]))
+        
+    return jsonify({"Preprocessing":"Complete"})
+
+
+@app.route("/train_FastText",methods=["POST"])
+def train_FastText():
+   
+    train_path=request.json.get("trainPath")
+    train_params=request.json.get("train_params")
+    build_params=request.json.get("build_params")
+    model_store_path=request.json.get("savePath")
+        
+    # instantiate model isntance with specified parameters    
+    model_gensim=FT(**train_params)
+    
+    # build model vocab
+    model_gensim.build_vocab(**build_params)
+
+    # train the model
+    model_gensim.train(corpus_file=corpus_file,epochs=model_gensim.epochs,total_examples=model_gensim.corpus_count,total_words=model_gensim.corpus_total_words)
+    
+    # save model
+    save_model(model_gensim,model_store_path)
+    
+    return jsonify({"FastText Training":"Success"})
+
+
+@app.route("/train_doc2vec",methods=["POST"])
+def train_doc2vec():
+    
+    train_path=request.json.get("trainPath")
+    model_store_path=request.json.get("savePath")
+    train_params=request.json.get("train_params")
+    build_params=request.json.get("build_params")
+            
+    # instantiate model isntance with specified parameters    
+    model_gensim=D2V(**train_params)
+    
+    # build model vocab
+    model_gensim.build_vocab(**build_params)
+
+    # train the model
+    model_gensim.train(corpus_file=corpus_file,epochs=model_gensim.epochs,total_examples=model_gensim.corpus_count,total_words=model_gensim.corpus_total_words)
+    
+    # remove temporary training data to recuce memorary consumption
+    model_gensim.delete_temporary_training_data(keep_doctags_vectors=True,keep_inference=True)
+    
+    # save model
+    save_model(model_gensim,model_store_path)
+    
+    return jsonify({"FastText Training":"Success"})
+
+
 #-------------------------------------------------------------------------------------------------#
 
 if __name__ == "__main__":
