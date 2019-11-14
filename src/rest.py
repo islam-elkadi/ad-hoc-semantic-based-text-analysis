@@ -103,13 +103,17 @@ def preprocess_data():
 @app.route("/train_FastText",methods=["POST"])
 def train_FastText():
    
+    pretrained_path=request.json.get("pretrainedPath")
     train_path=request.json.get("trainPath")
     train_params=request.json.get("train_params")
     build_params=request.json.get("build_params")
     model_store_path=request.json.get("savePath")
         
-    # instantiate model isntance with specified parameters    
-    model_gensim=FT(**train_params)
+    # instantiate new model isntance with specified parameters or updated existing model
+    if pretrained_path:
+        model_gensim=FT.load(pretrained_path)
+    else:
+        model_gensim=FT(**train_params)
     
     # build model vocab
     model_gensim.build_vocab(**build_params)
@@ -126,13 +130,17 @@ def train_FastText():
 @app.route("/train_doc2vec",methods=["POST"])
 def train_doc2vec():
     
+    pretrained_path=request.json.get("pretrainedPath")
     train_path=request.json.get("trainPath")
     model_store_path=request.json.get("savePath")
     train_params=request.json.get("train_params")
     build_params=request.json.get("build_params")
             
-    # instantiate model isntance with specified parameters    
-    model_gensim=D2V(**train_params)
+    # instantiate new model instance with specified parameters or updated existing model   
+    if pretrained_path:
+        model_gensim=D2V.load(pretrained_path)
+    else:
+        model_gensim=D2V(**train_params)
     
     # build model vocab
     model_gensim.build_vocab(**build_params)
