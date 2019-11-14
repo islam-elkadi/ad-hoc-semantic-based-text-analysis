@@ -27,27 +27,6 @@ def not_found(error):
 def test_app():
     return jsonify({"success": "true"})
 
-#------------------------------------------------------------------------------------------------#
-#                                        Endpoint testing                                        #
-#------------------------------------------------------------------------------------------------#
-
-@app.route("/clean_data", methods = ["POST"])
-def clean_data():
-    text = request.json.get("text")
-    text = clean_text(text)
-    return jsonify({"cleaned_text":text})
-
-@app.route("/word_tokens", methods = ["POST"])
-def create_word_tokens():
-    text = request.json.get("text")
-    tokens = text_to_word_tokens(model, text)
-    return jsonify({"word_tokenization":tokens})
-
-@app.route("/synonym_vectors", methods = ["POST"])
-def synonym_vectors():
-    categories = request.json.get("categories")
-    synonyms = get_syns(model, categories)
-    return jsonify({"synonyms": synonyms})
 
 #------------------------------------------------------------------------------------------------#
 #                           Main functionality and Route definitions                             #
