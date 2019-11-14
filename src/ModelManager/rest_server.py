@@ -19,16 +19,6 @@ def not_found(error):
 def test_app():
     return jsonify({"success":"true"})
 
-#------------------------------------------------------------------------------------------------#
-#                                        Endpoint Testing                                        #
-#------------------------------------------------------------------------------------------------#
-
-@app.route("/clean_data",methods=["POST"])
-def clean_data():
-    text=request.json.get("text")
-    text=clean_text(text)
-    return jsonify({"cleaned_text":text})
-
 
 #------------------------------------------------------------------------------------------------#
 #                                       Main Functionality                                       #
