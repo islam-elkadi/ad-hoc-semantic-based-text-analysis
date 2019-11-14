@@ -82,9 +82,6 @@ def train_doc2vec():
     
     return jsonify({"FastText Training":"Success"})
 
-@app.route("/train_glove",methods=["POST"])
-def train_glove():
-    pass
 
 #-------------------------------------------------------------------------------------------------#
 
