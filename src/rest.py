@@ -115,7 +115,7 @@ def train_FastText():
     model_gensim.build_vocab(**build_params)
 
     # train the model
-    model_gensim.train(corpus_file=corpus_file,epochs=model_gensim.epochs,total_examples=model_gensim.corpus_count,total_words=model_gensim.corpus_total_words)
+    model_gensim.train()
     
     # save model
     save_model(model_gensim,model_store_path)
@@ -138,7 +138,7 @@ def train_doc2vec():
     model_gensim.build_vocab(**build_params)
 
     # train the model
-    model_gensim.train(corpus_file=corpus_file,epochs=model_gensim.epochs,total_examples=model_gensim.corpus_count,total_words=model_gensim.corpus_total_words)
+    model_gensim.train()
     
     # remove temporary training data to recuce memorary consumption
     model_gensim.delete_temporary_training_data(keep_doctags_vectors=True,keep_inference=True)
