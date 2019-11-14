@@ -24,6 +24,22 @@ def test_app():
 #                                       Main Functionality                                       #
 #------------------------------------------------------------------------------------------------#
 
+@app.route("preprocess_data",methods=["POST"])
+def preprocess_data():
+    
+    target=request.json.get("target")
+    save_path=request.json.get("save_path")
+    train_path=request.json.get("train_path")
+    
+    df=pd.read_csv("path")
+    df[target]=df[target].apply(lambda x: clean_text(x))
+    df.dropna(subset=[target],inplace=True)
+    with open('{}.txt'.format(save_path), 'w') as fp:
+        fp.write('\n'.join(df[target]))
+        
+    return jsonify({"Preprocessing":"Complete"})
+
+
 @app.route("/train_FastText",methods=["POST"])
 def train_FastText():
    
