@@ -35,7 +35,7 @@ The API endpoints developed offer the following functionalities:
 
 # Usage
 
-Fire up a local rest server using the following command:
+First, fire up a local rest server using the following command:
 ```
 python rest_server.py
 ```
@@ -71,7 +71,19 @@ pass
 ```
 
 
+
+# Next Steps
+
+### Topic modelling using LDAs
+As of now, you have to input your topic queries to retrieve insights. However, I'd like to take this a step further by adding a layer where the topic detection is automated using [LDAs].
+
+
+### Deep level sentiment analysis
+I've come across [IBM Watson's powerful NLU service], and more specifically its sentiment analysis capabiliities. What I particularly love about Watson's sentiment analysis tool is that it quantifies the human emotion expressed in the data, rather than just returning an overall sentiment score between -1 & 1. Watson quantifies the following emotions: Joy, Anger, Disgust, Sadness, and Fear. With that being said, I'd definitely like to explore how I can leverage such a feature to deliever deeper sentiment analysis
+
 [Gensim]: https://radimrehurek.com/gensim/
 [TextBlob]: https://textblob.readthedocs.io/en/dev/
 [Pandas]: https://pandas.pydata.org/
 [Flask]: https://github.com/pallets/flask
+[LDAs]: https://radimrehurek.com/gensim/models/ldamodel.html
+[IBM Watson's powerful NLU service]: https://cloud.ibm.com/docs/services/natural-language-understanding/getting-started.html
