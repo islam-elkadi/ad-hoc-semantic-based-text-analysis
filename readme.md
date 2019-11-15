@@ -8,9 +8,15 @@ On the other hand, unsupervised learing will spare you the hassle of requiring d
 
 This capabilities of this project are deployed as RESTful APIs.
 
-# Installation
+# Developed using
+* Python 3.6
+* [Gensim]
+* [TextBlob]
+* [Pandas]
+* [Flask]
 
-This project was developed using Python 3.6. To install the required libraries run the following command.
+# Installation
+To install the required libraries run the following command.
 
 ```
 pip install -r requirements.txt
@@ -18,7 +24,7 @@ pip install -r requirements.txt
 
 # Offered functionality
 
-The core capabilities of this project where developed using the wonderful [Gensim] library. The API endpoints developed using Gensim provide the following functionalities:
+The API endpoints developed offer the following functionalities:
 
 * Text summarization
 * Semantic search & retrieval of sentances based on queried
@@ -66,3 +72,6 @@ pass
 
 
 [Gensim]: https://radimrehurek.com/gensim/
+[TextBlob]: https://textblob.readthedocs.io/en/dev/
+[Pandas]: https://pandas.pydata.org/
+[Flask]: https://github.com/pallets/flask
