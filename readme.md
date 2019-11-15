@@ -1,4 +1,4 @@
-# Ad-hoc semantic search & retrieve engine using Unsupervised Learning
+# Ad-hoc semantic search & retrieve using Unsupervised Learning
 
 Hello world! The objective of this project is to create a tool that allows users to extract customer sentiment visual & summarized insights from user reviews in order to discover & leverage hidden insights at scale to better drive business decisions. Unstructured data, such as user reviews, contain a wealth of information that can prove to be very valuable if there is a mechanism to ingest, proocess, and uncover valuable data frorm it.
 
