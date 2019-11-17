@@ -40,7 +40,7 @@ First, fire up a local rest server using the following command:
 python rest_server.py
 ```
 
-**To summarize text:**
+### To summarize text:
 
 POST 0.0.0.0:5000/summarize_text
 
@@ -58,7 +58,7 @@ Response body:
 }
 ```
 
-**To search & retrieve information bsed on queries**
+### To search & retrieve information bsed on queries:
 
 POST 0.0.0.0:5000/classify_sentence
 
@@ -80,7 +80,7 @@ Response body:
 }
 ```
 
-**To perform text analysis on user reviews**
+### To perform text analysis on user reviews
 
 POST 0.0.0.0:5000/get_sentiments
 
@@ -100,17 +100,17 @@ Response body:
 }
 ```
 
-To train a Word2Vec model:
+### To train a Word2Vec model:
 ```
 pass
 ```
 
-To train a FastTesxt model:
+### To train a FastTesxt model:
 ```
 pass
 ```
 
-To train a Doc2Vec model:
+### To train a Doc2Vec model:
 ```
 pass
 ```
