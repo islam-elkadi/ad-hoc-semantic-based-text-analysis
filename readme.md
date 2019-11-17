@@ -40,19 +40,64 @@ First, fire up a local rest server using the following command:
 python rest_server.py
 ```
 
-To summarize text:
+**To summarize text:**
+
+POST 0.0.0.0:5000/summarize_text
+
+Request body:
 ```
-pass
+{
+  "text":<str>
+}
 ```
 
-To search & retrieve information bsed on queries
+Response body:
 ```
-pass
+{
+  "summary":<str>
+}
 ```
 
-To perform text analysis on user reviews
+**To search & retrieve information bsed on queries**
+
+POST 0.0.0.0:5000/classify_sentence
+
+Request body:
 ```
-pass
+{
+  "data":<str>,
+  "categories":<lis>
+}
+```
+
+Response body:
+```
+{
+  "<category_str>:<list>,
+  "<category_str>:<list>,
+  ....
+  "<category_str>:<list>,
+}
+```
+
+**To perform text analysis on user reviews**
+
+POST 0.0.0.0:5000/get_sentiments
+
+Request body:
+```
+{
+  "data":<str>,
+  "categories":<list>,
+  "split":<int>
+}
+```
+
+Response body:
+```
+{
+
+}
 ```
 
 To train a Word2Vec model:
