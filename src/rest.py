@@ -89,7 +89,6 @@ def preprocess_data():
     
     target=request.json.get("target")
     save_path=request.json.get("save_path")
-    train_path=request.json.get("train_path")
     
     df=pd.read_csv("path")
     df[target]=df[target].apply(lambda x: clean_text(x))
