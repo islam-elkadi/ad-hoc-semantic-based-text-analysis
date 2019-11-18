@@ -98,7 +98,6 @@ def preprocess_data():
         
     return jsonify({"Preprocessing":"Complete"})
 
-
 @app.route("/train_FastText",methods=["POST"])
 def train_FastText():
    
@@ -126,7 +125,7 @@ def train_FastText():
     return jsonify({"FastText Training":"Success"})
 
 @app.route("/train_word2vec",methods=["POST"])
-def train_FastText():
+def train_word2vec():
    
     pretrained_path=request.json.get("pretrainedPath")
     train_path=request.json.get("trainPath")
