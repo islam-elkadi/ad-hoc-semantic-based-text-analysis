@@ -101,6 +101,26 @@ Response body:
 }
 ```
 
+### To preprocess data for word embeddings training
+
+POST 0.0.0.0:5000/preprocess_data
+
+Request body:
+```
+{
+  "target":<str>,
+  "save_path":<list>,
+  "split":<int>
+}
+```
+
+Response body:
+```
+{
+
+}
+```
+
 ### To train a Word2Vec model:
 Request body:
 ```
