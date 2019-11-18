@@ -48,9 +48,14 @@ POST 0.0.0.0:5000/summarize_text
 **Request body:**
 ```
 {
+  "ratio:<int>
   "text":<str>
 }
 ```
+
+**Request parameters:**
+* ratio: ratio of summary size comapred to input text data
+* data_path: text data
 
 **Response body:**
 ```
@@ -71,6 +76,10 @@ POST 0.0.0.0:5000/classify_sentence
 }
 ```
 
+**Request parameters:**
+* data_path: text data
+* categories: list of queries to search for
+
 **Response body:**
 ```
 {
@@ -88,16 +97,37 @@ POST 0.0.0.0:5000/get_sentiments
 **Request body:**
 ```
 {
-  "data":<str>,
-  "categories":<list>,
-  "split":<int>
+  "ratio:<int>,
+  "split":<int>,
+  "data_path":<str>,
+  "categories":<list>
 }
 ```
+
+
+**Request parameters:**
+* ratio: ratio of summary size comapred to input text data
+* data_path: text data
+* categories: list of queries to search for
+* split: {0, 1} 0 merge all documents results together; 1 means keep all document results separate
 
 **Response body:**
 ```
 {
-
+  <str_query_n>:{
+      "keywords":<list>,
+      "overall_sentiment":<str>,
+      "sentences":<list>,
+      "sentiment_ratios":<list>
+  }
+  ...,
+  ...,
+  <str_query_n>:{
+      "keywords":<list>,
+      "overall_sentiment":<str>,
+      "sentences":<list>,
+      "sentiment_ratios":<list>
+  }
 }
 ```
 
@@ -205,9 +235,6 @@ POST 0.0.0.0:5000/train_doc2vec
   "Doc2Vec Training":"Success"
 }
 ```
-
-[Doc2Vec buildling model vocab]
-
 
 # Next Steps
 
