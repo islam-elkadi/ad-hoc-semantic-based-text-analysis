@@ -58,7 +58,7 @@ Response body:
 }
 ```
 
-### To search & retrieve information bsed on queries:
+### To search & retrieve information based on queries:
 
 POST 0.0.0.0:5000/classify_sentence
 
@@ -101,18 +101,63 @@ Response body:
 ```
 
 ### To train a Word2Vec model:
+Request body:
 ```
-pass
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
+```
+
+Response body:
+```
+{
+  "Word2Vec Training":"Success"
+}
 ```
 
 ### To train a FastTesxt model:
+Request body:
 ```
-pass
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
+```
+
+Response body:
+```
+{
+  "FastText Training":"Success"
+}
 ```
 
 ### To train a Doc2Vec model:
+
+POST 0.0.0.0:5000/train_doc2vec
+
+Request body:
 ```
-pass
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
+```
+
+Response body:
+```
+{
+  "Doc2Vec Training":"Success"
+}
 ```
 
 
