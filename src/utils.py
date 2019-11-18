@@ -97,7 +97,7 @@ def sentiment_labels_ratios(values):
         overall_sentiment=counter_item.most_common(1)[0][0]
         return {"overall_sentiment":overall_sentiment,"ratios":ratios}
     else:
-        avg_score=mean([TextBlob(value).sentiment.polarity for value in values])
+        avg_score=np.mean([TextBlob(value).sentiment.polarity for value in values])
         average_sentiment=create_label(avg_score)
         return {"overall_sentiment":average_sentiment,"ratios":ratios}
 

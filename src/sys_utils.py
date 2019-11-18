@@ -4,25 +4,29 @@ import json
 import pickle
 
 import numpy as np
+import pandas as pd
 
 from os import makedirs
-from os.path import exists, join
+from os.path import exists,join
 
-from statistics import mean
+from collections import Counter,defaultdict
 
-from collections import Counter, defaultdict
+import gensim.downloader as api
 
 from gensim.parsing.preprocessing import *
-from gensim.summarization import keywords
 from gensim.utils import simple_preprocess
+
+from gensim.summarization import keywords
 from gensim.summarization.summarizer import summarize
-from gensim.summarization.textcleaner import replace_abbreviations, split_sentences
+from gensim.summarization.textcleaner import replace_abbreviations,split_sentences
+
 from gensim.models.fasttext import FastText as FT
-from gensim.models.doc2vec import Doc2Vec as D2V, TaggedDocument
-from gensim.models import Word2Vec as WV
+from gensim.models import KeyedVectors,  Word2Vec as WV
+from gensim.models.doc2vec import Doc2Vec as D2V,TaggedDocument
 
 
 from textblob import TextBlob
+from flask import Flask,jsonify,request,make_response
 
 #-----------------------------------------------
 #                 Load/Save Data               
@@ -35,30 +39,30 @@ def makedir(directory):
     else:
         return False
 
-def load_text_data(directory, read_lines = False):
-    with open(directory, "r", encoding = "utf8") as data:
-        if read_lines == False:
+def load_text_data(directory,read_lines=0):
+    with open(directory,"r",encoding="utf8") as data:
+        if read_lines==0:
             return data.read()
         else:
             return data.readlines()
 
-def save_text_data(path, data, mode = "w"):
-    with open(path, mode = mode, encoding = "utf-8") as text_file:
+def save_text_data(path,data,mode="w"):
+    with open(path,mode=mode,encoding="utf-8") as text_file:
         text_file.write(data)
 
-def save_json(path, data):
-    with open(path, "w") as f:
-        json.dump(data, f, indent = 4, ensure_ascii = True)
+def save_json(path,data):
+    with open(path,"w") as f:
+        json.dump(data,f,indent=4,ensure_ascii=True)
 
-def save_arrays(name, path = "./"):
-    save = os.join(path, name)+".pkl"
-    with open(save, 'wb') as outfile:
-        pickle.dump(tokens, outfile, pickle.HIGHEST_PROTOCOL)
+def save_arrays(name,path="./"):
+    save=os.join(path,name)+".pkl"
+    with open(save,'wb') as outfile:
+        pickle.dump(tokens,outfile,pickle.HIGHEST_PROTOCOL)
 
-def load_arrays(name, path = "./"):
-    load = os.join(path, name)+".pkl"
-    with open(load, 'rb') as infile:
-        result = pickle.load(infile)
+def load_arrays(name,path="./"):
+    load=os.join(path,name)+".pkl"
+    with open(load,'rb') as infile:
+        result=pickle.load(infile)
     return result
 
 
@@ -75,7 +79,7 @@ def remove_contractions(text):
         Returns:
             raw: cleaned text
     """
-    contractions = { 
+    contractions={ 
                     "ain't": "is not",
                     "aren't": "are not",
                     "can't": "cannot",
@@ -173,13 +177,13 @@ def remove_contractions(text):
                 }
     
     for contrac in list(contractions.keys()):
-        text = re.sub(contrac, contractions[contrac], text)
+        text=re.sub(contrac,contractions[contrac],text)
     return text
 
 def append_zero_to_decimal(text):
-    temp = re.findall(r"\s+\.\d+", text)
+    temp=re.findall(r"\s+\.\d+",text)
     for tmp in temp:
-        text = re.sub(tmp, "0{}".format(tmp.strip()), text)
+        text=re.sub(tmp,"0{}".format(tmp.strip()),text)
     return text
 
 
