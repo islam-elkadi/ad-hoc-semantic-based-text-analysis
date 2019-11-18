@@ -104,6 +104,20 @@ def train_doc2vec():
 #------------------------------------------------------------------------------------------------#
 #                                       Functional Endpoints                                     #
 #------------------------------------------------------------------------------------------------#
+@app.route("/preprocess_data",methods=["POST"])
+def preprocess_data():
+    
+    target=request.json.get("target")
+    save_path=request.json.get("save_path")
+    
+    df=pd.read_csv("path")
+    df[target]=df[target].apply(lambda x: clean_text(x))
+    df.dropna(subset=[target],inplace=True)
+    with open("{}.txt".format(save_path),"w") as fp:
+        fp.write("\n".join(df[target]))
+        
+    return jsonify({"Preprocessing":"Complete"})
+
 @app.route("/classify_sentence",methods=["POST"])
 def classify_sentence():
 
@@ -126,10 +140,9 @@ def get_sentiments():
 
     ratio=request.json.get("ratio")
     split=request.json.get("split")
-    data_path=request.json.get("data_path")
+    data=request.json.get("data")
     categories=request.json.get("categories")
     
-
     categories=[x for x in categories if x in model.vocab]
     synonyms=get_syns(model,categories)
 
@@ -158,20 +171,6 @@ def summarize_text():
     ratio=request.json.get("ratio")
     result=create_summary(text,ratio)
     return jsonify(result)
-
-@app.route("/preprocess_data",methods=["POST"])
-def preprocess_data():
-    
-    target=request.json.get("target")
-    save_path=request.json.get("save_path")
-    
-    df=pd.read_csv("path")
-    df[target]=df[target].apply(lambda x: clean_text(x))
-    df.dropna(subset=[target],inplace=True)
-    with open("{}.txt".format(save_path),"w") as fp:
-        fp.write("\n".join(df[target]))
-        
-    return jsonify({"Preprocessing":"Complete"})
 
 
 #-------------------------------------------------------------------------------------------------#
