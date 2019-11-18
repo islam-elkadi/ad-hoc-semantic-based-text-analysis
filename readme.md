@@ -55,7 +55,7 @@ POST 0.0.0.0:5000/summarize_text
 
 **Request parameters:**
 * ratio: ratio of summary size comapred to input text data
-* data_path: text data
+* data: text data
 
 **Response body:**
 ```
@@ -77,7 +77,7 @@ POST 0.0.0.0:5000/classify_sentence
 ```
 
 **Request parameters:**
-* data_path: text data
+* data: text data
 * categories: list of queries to search for
 
 **Response body:**
@@ -99,7 +99,7 @@ POST 0.0.0.0:5000/get_sentiments
 {
   "ratio:<int>,
   "split":<int>,
-  "data_path":<str>,
+  "data":<str>,
   "categories":<list>
 }
 ```
@@ -107,7 +107,7 @@ POST 0.0.0.0:5000/get_sentiments
 
 **Request parameters:**
 * ratio: ratio of summary size comapred to input text data
-* data_path: text data
+* data: text data
 * categories: list of queries to search for
 * split: {0, 1} 0 merge all documents results together; 1 means keep all document results separate
 
