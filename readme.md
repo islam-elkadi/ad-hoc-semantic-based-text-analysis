@@ -163,6 +163,13 @@ POST 0.0.0.0:5000/preprocess_data
 }
 ```
 
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [FastText training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [FastText building model vocab parameters]
+
 **Response body:**
 ```
 {
@@ -221,3 +228,5 @@ I've come across [IBM Watson's powerful NLU service], and more specifically its 
 [Word2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.build_vocab
 [Doc2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.train
 [Doc2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/doc2vec.html#gensim.models.doc2vec.Doc2Vec.build_vocab
+[FastText training parameters]: https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText.train
+[FastText building model vocab parameters]: https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText.build_vocab
