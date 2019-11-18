@@ -32,8 +32,8 @@ def test_app():
 #                           Main functionality and Route definitions                             #
 #------------------------------------------------------------------------------------------------#
 
-@app.route("/sentence_classify", methods = ["POST"])
-def sentence_classify():
+@app.route("/classify_sentence", methods = ["POST"])
+def classify_sentence():
 
     data = request.json.get("data")
     categories = request.json.get("categories")
@@ -76,7 +76,7 @@ def get_sentiments():
         classifications = classify_sentences(model, token_sents, token_words, synonyms, categories)
         results = analyze_emotions(classifications, ratio)
 
-    return jsonify({"analysis":results})
+    return jsonify(results)
 
 @app.route("/summarize_text", methods = ["POST"])
 def summarize_text():
