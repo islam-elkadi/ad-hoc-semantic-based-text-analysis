@@ -17,7 +17,7 @@ from gensim.summarization import keywords
 from gensim.utils import simple_preprocess
 from gensim.summarization.summarizer import summarize
 from gensim.summarization.textcleaner import replace_abbreviations, split_sentences
-from gensim.models.fasttext import FT
+from gensim.models.fasttext import FastText as FT
 from gensim.models.doc2vec import Doc2Vec as D2V, TaggedDocument
 from gensim.models import Word2Vec as WV
 
