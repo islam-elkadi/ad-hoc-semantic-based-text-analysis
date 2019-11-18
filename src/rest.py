@@ -84,7 +84,7 @@ def summarize_text():
     result = create_summary(text, ratio)
     return jsonify(result)
 
-@app.route("preprocess_data",methods=["POST"])
+@app.route("/preprocess_data",methods=["POST"])
 def preprocess_data():
     
     target=request.json.get("target")
