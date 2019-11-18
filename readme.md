@@ -30,7 +30,8 @@ The API endpoints developed offer the following functionalities:
 * Semantic search & retrieval of sentances based on queried
 * Categorical sentiment analysis, granular level breakdown of expressed sentiment, and keyword extraction based on queried topics
 * Preprocessing text information in preparation for training
-* Training Word2vec & FastText word embedding models
+* Training Word2vec models
+* Training FastText models
 * Training Doc2Vec models
 
 # Usage
@@ -44,25 +45,25 @@ python rest_server.py
 
 POST 0.0.0.0:5000/summarize_text
 
-Request body:
+**Request body:**
 ```
 {
   "text":<str>
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "summary":<str>
 }
 ```
 
-### To search & retrieve information bsed on queries:
+### To search & retrieve information based on queries:
 
 POST 0.0.0.0:5000/classify_sentence
 
-Request body:
+**Request body:**
 ```
 {
   "data":<str>,
@@ -70,7 +71,7 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "<category_str>:<list>,
@@ -84,7 +85,7 @@ Response body:
 
 POST 0.0.0.0:5000/get_sentiments
 
-Request body:
+**Request body:**
 ```
 {
   "data":<str>,
@@ -93,28 +94,119 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
 
 }
 ```
 
-### To train a Word2Vec model:
+### To preprocess data for word embeddings training
+
+POST 0.0.0.0:5000/preprocess_data
+
+**Request body:**
 ```
-pass
+{
+  "target":<str>,
+  "save_path":<list>,
+}
+```
+
+**Request parameters:**
+* target: target Excel or CSV column to extract text from and preprocess into training format
+* Save_path: save preprocessed data into .txt file into aa particular path
+
+**Response body:**
+```
+{
+  "Preprocessing":"Complete"
+}
+```
+
+### To train a Word2Vec model:
+**Request body:**
+```
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
+```
+
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [Word2Vec training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [Word2Vec building model vocab parameters]
+
+**Response body:**
+```
+{
+  "Word2Vec Training":"Success"
+}
 ```
 
 ### To train a FastTesxt model:
+
+**Request body:**
 ```
-pass
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
+```
+
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [FastText training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [FastText building model vocab parameters]
+
+**Response body:**
+```
+{
+  "FastText Training":"Success"
+}
 ```
 
 ### To train a Doc2Vec model:
+
+POST 0.0.0.0:5000/train_doc2vec
+
+**Request body:**
 ```
-pass
+{
+  "pretrained_path":<str>,
+  "train_path":<str>,
+  "save_path":<str>,
+  "train_params":<dict>,
+  "build_params":<dict>
+}
 ```
 
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [Doc2Vec training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [Doc2Vec building model vocab parameters]
+
+**Response body:**
+```
+{
+  "Doc2Vec Training":"Success"
+}
+```
+
+[Doc2Vec buildling model vocab]
 
 
 # Next Steps
@@ -132,3 +224,9 @@ I've come across [IBM Watson's powerful NLU service], and more specifically its 
 [Flask]: https://github.com/pallets/flask
 [LDAs]: https://radimrehurek.com/gensim/models/ldamodel.html
 [IBM Watson's powerful NLU service]: https://cloud.ibm.com/docs/services/natural-language-understanding/getting-started.html
+[Word2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec
+[Word2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.build_vocab
+[Doc2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.train
+[Doc2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/doc2vec.html#gensim.models.doc2vec.Doc2Vec.build_vocab
+[FastText training parameters]: https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText.train
+[FastText building model vocab parameters]: https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText.build_vocab
