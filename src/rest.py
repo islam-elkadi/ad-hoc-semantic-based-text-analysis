@@ -126,13 +126,38 @@ def train_FastText():
     
     return jsonify({"FastText Training":"Success"})
 
+@app.route("/train_word2vec",methods=["POST"])
+def train_FastText():
+   
+    pretrained_path=request.json.get("pretrainedPath")
+    train_path=request.json.get("trainPath")
+    train_params=request.json.get("train_params")
+    build_params=request.json.get("build_params")
+    model_store_path=request.json.get("savePath")
+        
+    # instantiate new model isntance with specified parameters or updated existing model
+    if pretrained_path:
+        model_gensim=WV.load(pretrained_path)
+    else:
+        model_gensim=WV(**train_params)
+    
+    # build model vocab
+    model_gensim.build_vocab(**build_params)
+
+    # train the model
+    model_gensim.train()
+    
+    # save model
+    save_model(model_gensim,model_store_path)
+    
+    return jsonify({"Word2Vec Training":"Success"})
 
 @app.route("/train_doc2vec",methods=["POST"])
 def train_doc2vec():
     
-    pretrained_path=request.json.get("pretrainedPath")
-    train_path=request.json.get("trainPath")
-    model_store_path=request.json.get("savePath")
+    pretrained_path=request.json.get("pretrained_path")
+    train_path=request.json.get("train_path")
+    model_store_path=request.json.get("save_path")
     train_params=request.json.get("train_params")
     build_params=request.json.get("build_params")
             
@@ -154,7 +179,7 @@ def train_doc2vec():
     # save model
     save_model(model_gensim,model_store_path)
     
-    return jsonify({"FastText Training":"Success"})
+    return jsonify({"Doc2Vec Training":"Success"})
 
 
 #-------------------------------------------------------------------------------------------------#
