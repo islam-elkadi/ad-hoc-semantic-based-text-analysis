@@ -30,7 +30,8 @@ The API endpoints developed offer the following functionalities:
 * Semantic search & retrieval of sentances based on queried
 * Categorical sentiment analysis, granular level breakdown of expressed sentiment, and keyword extraction based on queried topics
 * Preprocessing text information in preparation for training
-* Training Word2vec & FastText word embedding models
+* Training Word2vec models
+* Training FastText models
 * Training Doc2Vec models
 
 # Usage
