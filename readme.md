@@ -45,14 +45,14 @@ python rest_server.py
 
 POST 0.0.0.0:5000/summarize_text
 
-Request body:
+**Request body:**
 ```
 {
   "text":<str>
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "summary":<str>
@@ -63,7 +63,7 @@ Response body:
 
 POST 0.0.0.0:5000/classify_sentence
 
-Request body:
+**Request body:**
 ```
 {
   "data":<str>,
@@ -71,7 +71,7 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "<category_str>:<list>,
@@ -85,7 +85,7 @@ Response body:
 
 POST 0.0.0.0:5000/get_sentiments
 
-Request body:
+**Request body:**
 ```
 {
   "data":<str>,
@@ -94,7 +94,7 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
 
@@ -105,7 +105,7 @@ Response body:
 
 POST 0.0.0.0:5000/preprocess_data
 
-Request body:
+**Request body:**
 ```
 {
   "target":<str>,
@@ -117,7 +117,7 @@ Request body:
 * target: target Excel or CSV column to extract text from and preprocess into training format
 * Save_path: save preprocessed data into .txt file into aa particular path
 
-Response body:
+**Response body:**
 ```
 {
   "Preprocessing":"Complete"
@@ -125,7 +125,7 @@ Response body:
 ```
 
 ### To train a Word2Vec model:
-Request body:
+**Request body:**
 ```
 {
   "pretrained_path":<str>,
@@ -143,7 +143,7 @@ Request body:
 * train_params: parameters to be provided to train model. Futher explanation of [Word2Vec training parameters]
 * build_params: parameters to be provided to build model vocab. Futher explanation of [Word2Vec building model vocab parameters]
 
-Response body:
+**Response body:**
 ```
 {
   "Word2Vec Training":"Success"
@@ -151,7 +151,8 @@ Response body:
 ```
 
 ### To train a FastTesxt model:
-Request body:
+
+**Request body:**
 ```
 {
   "pretrained_path":<str>,
@@ -162,7 +163,7 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "FastText Training":"Success"
@@ -173,7 +174,7 @@ Response body:
 
 POST 0.0.0.0:5000/train_doc2vec
 
-Request body:
+**Request body:**
 ```
 {
   "pretrained_path":<str>,
@@ -184,7 +185,7 @@ Request body:
 }
 ```
 
-Response body:
+**Response body:**
 ```
 {
   "Doc2Vec Training":"Success"
