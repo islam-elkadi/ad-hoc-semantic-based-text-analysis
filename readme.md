@@ -185,6 +185,13 @@ POST 0.0.0.0:5000/train_doc2vec
 }
 ```
 
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [Doc2Vec training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [Doc2Vec building model vocab parameters]
+
 **Response body:**
 ```
 {
@@ -192,6 +199,7 @@ POST 0.0.0.0:5000/train_doc2vec
 }
 ```
 
+[Doc2Vec buildling model vocab]
 
 
 # Next Steps
@@ -211,3 +219,5 @@ I've come across [IBM Watson's powerful NLU service], and more specifically its 
 [IBM Watson's powerful NLU service]: https://cloud.ibm.com/docs/services/natural-language-understanding/getting-started.html
 [Word2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec
 [Word2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.build_vocab
+[Doc2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.train
+[Doc2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/doc2vec.html#gensim.models.doc2vec.Doc2Vec.build_vocab
