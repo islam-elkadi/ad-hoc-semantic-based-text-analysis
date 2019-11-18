@@ -110,9 +110,12 @@ Request body:
 {
   "target":<str>,
   "save_path":<list>,
-  "split":<int>
 }
 ```
+
+**Request parameters:**
+* target: target Excel or CSV column to extract text from and preprocess into training format
+* Save_path: save preprocessed data into .txt file into aa particular path
 
 Response body:
 ```
@@ -132,6 +135,13 @@ Request body:
   "build_params":<dict>
 }
 ```
+
+**Request parameters:**
+* pretrained_path: path to load pretrained model and its training parameters
+* train_path: path to load preprecessed training data from
+* save_path: path to save new or continued training model
+* train_params: parameters to be provided to train model. Futher explanation of [Word2Vec training parameters]
+* build_params: parameters to be provided to build model vocab. Futher explanation of [Word2Vec building model vocab parameters]
 
 Response body:
 ```
@@ -198,3 +208,5 @@ I've come across [IBM Watson's powerful NLU service], and more specifically its 
 [Flask]: https://github.com/pallets/flask
 [LDAs]: https://radimrehurek.com/gensim/models/ldamodel.html
 [IBM Watson's powerful NLU service]: https://cloud.ibm.com/docs/services/natural-language-understanding/getting-started.html
+[Word2Vec training parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec
+[Word2Vec building model vocab parameters]: https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.build_vocab
