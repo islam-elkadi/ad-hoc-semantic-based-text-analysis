@@ -138,30 +138,32 @@ def classify_sentence():
 @app.route("/get_sentiments",methods=["POST"])
 def get_sentiments():
 
+    data=request.json.get("data")
     ratio=request.json.get("ratio")
     split=request.json.get("split")
-    data=request.json.get("data")
     categories=request.json.get("categories")
     
     categories=[x for x in categories if x in model.vocab]
     synonyms=get_syns(model,categories)
+
+    def analysis(model,token_sents,token_words,synonyms,categories):
+        token_words=text_to_word_tokens(model,text)
+        classifications=classify_sentences(model,token_sents,token_words,synonyms,categories)
+        result=analyze_emotions(classifications,ratio)
+        return result
 
     if split==1:
         results=[]
         for text in data:
             text=clean_text(text)
             token_sents=split_sentences(text)
-            token_words=text_to_word_tokens(model,text)
-            classifications=classify_sentences(model,token_sents,token_words,synonyms,categories)
-            result=analyze_emotions(classifications,ratio)
+            result=analysis(model,token_sents,token_words,synonyms,categories)
             results.append(result)
     else:
         data=" ".join(data)
         data=clean_text(data)
         token_sents=split_sentences(data)
-        token_words=text_to_word_tokens(model,data)
-        classifications=classify_sentences(model,token_sents,token_words,synonyms,categories)
-        results=analyze_emotions(classifications,ratio)
+        result=analysis(model,token_sents,token_words,synonyms,categories)
 
     return jsonify(results)
 
@@ -175,6 +177,6 @@ def summarize_text():
 
 #-------------------------------------------------------------------------------------------------#
 
-if __name__ == "__main__":
+if __name__=="__main__":
     model=api.load("word2vec-google-news-300")
     app.run(host="0.0.0.0",port=5000,debug=True)
